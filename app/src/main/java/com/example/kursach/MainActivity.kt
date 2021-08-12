@@ -2,6 +2,7 @@ package com.example.kursach
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         val fabAdd = findViewById<FloatingActionButton>(R.id.fb_add_team)
 
         fabAdd.setOnClickListener {
-            //openAddDialog()
+            openAddDialog()
         }
 
         val myRecycler = findViewById<RecyclerView>(R.id.rv_teams)
@@ -28,5 +29,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun openAddDialog() {
         val dialog = AlertDialog.Builder(this)
+        dialog.setTitle("Добавить команду")
+
+        val inflater = LayoutInflater.from(this)
+        val addWindow = inflater.inflate(R.layout.layout_team_add, null)
+        dialog.setView(addWindow)
+
+        dialog.setNegativeButton("Отменить") {dialogInterface, which ->
+            dialogInterface.dismiss()
+        }
+
+        dialog.setPositiveButton("Подтвердить") {dialogInterface, which ->
+            dialogInterface.dismiss()
+        }
+
+        dialog.show()
     }
 }
