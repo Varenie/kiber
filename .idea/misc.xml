@@ -5,7 +5,10 @@
       <map>
         <entry key="..\:/GitHub/Kursach/app/src/main/res/drawable/ic_add.xml" value="0.35625" />
         <entry key="..\:/GitHub/Kursach/app/src/main/res/layout/activity_main.xml" value="0.2957427536231884" />
+        <entry key="..\:/GitHub/Kursach/app/src/main/res/layout/activity_team.xml" value="0.2957427536231884" />
+        <entry key="..\:/GitHub/Kursach/app/src/main/res/layout/layout_player_add.xml" value="0.2957427536231884" />
         <entry key="..\:/GitHub/Kursach/app/src/main/res/layout/layout_team_add.xml" value="0.2957427536231884" />
+        <entry key="..\:/GitHub/Kursach/app/src/main/res/layout/recycler_item_players.xml" value="0.2957427536231884" />
         <entry key="..\:/GitHub/Kursach/app/src/main/res/layout/recycler_item_teams.xml" value="0.2957427536231884" />
       </map>
     </option>

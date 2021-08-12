@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val fabAdd = findViewById<FloatingActionButton>(R.id.fb_add_team)
+        val fabAdd = findViewById<FloatingActionButton>(R.id.fab_add_team)
 
         fabAdd.setOnClickListener {
             openAddDialog()

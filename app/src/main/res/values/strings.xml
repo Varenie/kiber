@@ -10,4 +10,8 @@
     <string name="et_loses">Введите количество поражений</string>
     <string name="et_draws">Введите количество ничьих</string>
     <string name="et_descriptions">Описание команды (необязательно)</string>
+    <string name="fullname">Фамилия Имя</string>
+    <string name="nick">Никнэйм</string>
+    <string name="description">Тут какое то небольшое описание игрокаьвдлыовоы ыво вша вшш в вшаршрвшарш шв ршарвша р ра швршв рш вшырашрашршвы</string>
+    <string name="games">Игры: CS:GO, Dota 2, WoW</string>
 </resources>
