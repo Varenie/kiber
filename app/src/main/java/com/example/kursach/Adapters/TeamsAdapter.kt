@@ -1,4 +1,4 @@
-package com.example.kursach
+package com.example.kursach.Adapters
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kursach.Activities.TeamActivity
+import com.example.kursach.R
 
 class TeamsAdapter: RecyclerView.Adapter<TeamsAdapter.VHolder>() {
 

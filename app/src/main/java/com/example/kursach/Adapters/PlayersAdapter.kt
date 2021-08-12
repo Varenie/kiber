@@ -1,9 +1,10 @@
-package com.example.kursach
+package com.example.kursach.Adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kursach.R
 
 class PlayersAdapter: RecyclerView.Adapter<PlayersAdapter.VHolder>() {
     class VHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
