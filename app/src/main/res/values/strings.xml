@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Kursach</string>
+    <string name="team_name">Название команды</string>
+    <string name="wins">Количество побед: 0</string>
+    <string name="loses">Количество поражений: 0</string>
+    <string name="draws">Количество ничьих: 0</string>
+    <string name="slogan">тут может быть какой-то девиз команды</string>
+    <string name="et_slogan">Введите девиз команды</string>
+    <string name="et_wins">Введите количество побед</string>
+    <string name="et_loses">Введите количество поражений</string>
+    <string name="et_draws">Введите количество ничьих</string>
+    <string name="et_descriptions">Описание команды (необязательно)</string>
 </resources>
