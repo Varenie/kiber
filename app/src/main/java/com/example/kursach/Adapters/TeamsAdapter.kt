@@ -7,12 +7,18 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kursach.Activities.TeamActivity
+import com.example.kursach.DataClasses.Team
 import com.example.kursach.R
 
-class TeamsAdapter: RecyclerView.Adapter<TeamsAdapter.VHolder>() {
+class TeamsAdapter(val teams: ArrayList<Team>): RecyclerView.Adapter<TeamsAdapter.VHolder>() {
 
     class VHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val wins = itemView.findViewById<TextView>(R.id.tv_wins)
+        val name = itemView.findViewById<TextView>(R.id.tv_team_name)
+//        val slogan = itemView.findViewById<TextView>(R.id.tv_slogan)
+//        val wins = itemView.findViewById<TextView>(R.id.tv_wins)
+//        val wins = itemView.findViewById<TextView>(R.id.tv_wins)
+//        val wins = itemView.findViewById<TextView>(R.id.tv_wins)
+//        val wins = itemView.findViewById<TextView>(R.id.tv_wins)
 
         init {
             super.itemView
@@ -21,8 +27,9 @@ class TeamsAdapter: RecyclerView.Adapter<TeamsAdapter.VHolder>() {
                 context.startActivity(Intent(context, TeamActivity::class.java))
             }
         }
-        fun bind(position: Int){
-            wins.text = "Количество побед: $position"
+
+        fun bind(position: Int, team: Team){
+//            wins.text = "Количество побед: $position"
         }
     }
 
@@ -34,7 +41,7 @@ class TeamsAdapter: RecyclerView.Adapter<TeamsAdapter.VHolder>() {
     }
 
     override fun onBindViewHolder(holder: VHolder, position: Int) {
-        holder.bind(position)
+        holder.bind(position, teams[position])
     }
 
     override fun getItemCount(): Int {
