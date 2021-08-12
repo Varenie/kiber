@@ -40,6 +40,28 @@ class TablePlayers(context: Context) {
         db.insert(TABLE_NAME, null, values)
     }
 
+    fun getPlayers(team_id: Int): ArrayList<Player> {
+
+        val players = arrayListOf<Player>()
+        cursor = db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COLUMN_TEAM_ID", arrayOf(team_id.toString()))
+        cursor.moveToFirst()
+
+        while (!cursor.isAfterLast) {
+            val player = Player(
+                cursor.getInt(indexId),
+                cursor.getInt(indexTeamId),
+                cursor.getString(indexFullname),
+                cursor.getString(indexNickname),
+                cursor.getString(indexGames),
+                cursor.getString(indexDescription)
+            )
+
+            players.add(player)
+            cursor.moveToNext()
+        }
+
+        return players
+    }
     fun showDB() {
         cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
         cursor.moveToFirst()

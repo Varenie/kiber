@@ -14,7 +14,7 @@ import com.example.kursach.Tables.TableTeams
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
-    val tableTeams = TableTeams(this)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,17 +26,11 @@ class MainActivity : AppCompatActivity() {
             openAddDialog()
         }
 
-        val myRecycler = findViewById<RecyclerView>(R.id.rv_teams)
-        myRecycler.layoutManager = LinearLayoutManager(this)
-        myRecycler.setHasFixedSize(true)
-
-        val teams = tableTeams.getTeams()
-
-        val adapter = TeamsAdapter(teams)
-        myRecycler.adapter = adapter
+        updateUI()
     }
 
     private fun openAddDialog() {
+        val tableTeams = TableTeams(this)
         val dialog = AlertDialog.Builder(this)
         dialog.setTitle("Добавить команду")
 
@@ -56,12 +50,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         dialog.setPositiveButton("Подтвердить") {dialogInterface, which ->
+            val descriptionText = if (description.text.isNullOrBlank()){
+                ""
+            } else {
+                description.text.toString()
+            }
             val team = Team(
                 name = name.text.toString(),
                 slogan = slogan.text.toString(),
                 wins = wins.text.toString().toInt(),
                 loses = loses.text.toString().toInt(),
-                draws = draws.text.toString().toInt()
+                draws = draws.text.toString().toInt(),
+                description = descriptionText
             )
 
             tableTeams.addTeam(team)
@@ -75,7 +75,8 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    fun updateUI() {
+    private fun updateUI() {
+        val tableTeams = TableTeams(this)
         val myRecycler = findViewById<RecyclerView>(R.id.rv_teams)
         myRecycler.layoutManager = LinearLayoutManager(this)
         myRecycler.setHasFixedSize(true)

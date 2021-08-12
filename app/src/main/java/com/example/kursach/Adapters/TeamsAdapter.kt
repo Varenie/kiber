@@ -31,9 +31,9 @@ class TeamsAdapter(val teams: ArrayList<Team>): RecyclerView.Adapter<TeamsAdapte
         fun bind(position: Int, teams: ArrayList<Team>){
             name.text = teams[adapterPosition].name
             slogan.text = teams[adapterPosition].slogan
-            wins.text = teams[adapterPosition].wins.toString()
-            loses.text = teams[adapterPosition].loses.toString()
-            draws.text = teams[adapterPosition].draws.toString()
+            wins.text = "Количество побед: ${teams[adapterPosition].wins}"
+            loses.text = "Количество поражений: ${teams[adapterPosition].loses}"
+            draws.text = "Количество ничьих: ${teams[adapterPosition].draws}"
             description.text = teams[adapterPosition].description
         }
     }
@@ -50,6 +50,6 @@ class TeamsAdapter(val teams: ArrayList<Team>): RecyclerView.Adapter<TeamsAdapte
     }
 
     override fun getItemCount(): Int {
-        return 5
+        return teams.size
     }
 }
