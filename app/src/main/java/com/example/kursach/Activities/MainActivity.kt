@@ -14,6 +14,8 @@ import com.example.kursach.Tables.TableTeams
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
+    val tableTeams = TableTeams(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -24,6 +26,14 @@ class MainActivity : AppCompatActivity() {
             openAddDialog()
         }
 
+        val myRecycler = findViewById<RecyclerView>(R.id.rv_teams)
+        myRecycler.layoutManager = LinearLayoutManager(this)
+        myRecycler.setHasFixedSize(true)
+
+        val teams = tableTeams.getTeams()
+
+        val adapter = TeamsAdapter(teams)
+        myRecycler.adapter = adapter
     }
 
     private fun openAddDialog() {
@@ -46,7 +56,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         dialog.setPositiveButton("Подтвердить") {dialogInterface, which ->
-            val tableTeams = TableTeams(this)
             val team = Team(
                 name = name.text.toString(),
                 slogan = slogan.text.toString(),
@@ -71,7 +80,9 @@ class MainActivity : AppCompatActivity() {
         myRecycler.layoutManager = LinearLayoutManager(this)
         myRecycler.setHasFixedSize(true)
 
-        val adapter = TeamsAdapter()
+        val teams = tableTeams.getTeams()
+
+        val adapter = TeamsAdapter(teams)
         myRecycler.adapter = adapter
     }
 }

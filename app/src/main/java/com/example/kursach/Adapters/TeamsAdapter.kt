@@ -14,11 +14,11 @@ class TeamsAdapter(val teams: ArrayList<Team>): RecyclerView.Adapter<TeamsAdapte
 
     class VHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val name = itemView.findViewById<TextView>(R.id.tv_team_name)
-//        val slogan = itemView.findViewById<TextView>(R.id.tv_slogan)
-//        val wins = itemView.findViewById<TextView>(R.id.tv_wins)
-//        val wins = itemView.findViewById<TextView>(R.id.tv_wins)
-//        val wins = itemView.findViewById<TextView>(R.id.tv_wins)
-//        val wins = itemView.findViewById<TextView>(R.id.tv_wins)
+        val slogan = itemView.findViewById<TextView>(R.id.tv_slogan)
+        val wins = itemView.findViewById<TextView>(R.id.tv_wins)
+        val loses = itemView.findViewById<TextView>(R.id.tv_loses)
+        val draws = itemView.findViewById<TextView>(R.id.tv_draws)
+        val description = itemView.findViewById<TextView>(R.id.tv_description)
 
         init {
             super.itemView
@@ -28,8 +28,13 @@ class TeamsAdapter(val teams: ArrayList<Team>): RecyclerView.Adapter<TeamsAdapte
             }
         }
 
-        fun bind(position: Int, team: Team){
-//            wins.text = "Количество побед: $position"
+        fun bind(position: Int, teams: ArrayList<Team>){
+            name.text = teams[adapterPosition].name
+            slogan.text = teams[adapterPosition].slogan
+            wins.text = teams[adapterPosition].wins.toString()
+            loses.text = teams[adapterPosition].loses.toString()
+            draws.text = teams[adapterPosition].draws.toString()
+            description.text = teams[adapterPosition].description
         }
     }
 
@@ -41,7 +46,7 @@ class TeamsAdapter(val teams: ArrayList<Team>): RecyclerView.Adapter<TeamsAdapte
     }
 
     override fun onBindViewHolder(holder: VHolder, position: Int) {
-        holder.bind(position, teams[position])
+        holder.bind(position, teams)
     }
 
     override fun getItemCount(): Int {

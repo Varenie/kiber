@@ -43,6 +43,29 @@ class TableTeams(context: Context) {
         db.insert(TABLE_NAME, null, values)
     }
 
+    fun getTeams(): ArrayList<Team> {
+        val teams = arrayListOf<Team>()
+        cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
+        cursor.moveToFirst()
+
+        while (!cursor.isAfterLast) {
+            val team = Team(
+                cursor.getInt(indexId),
+                cursor.getString(indexName),
+                cursor.getString(indexSlogan),
+                cursor.getInt(indexWins),
+                cursor.getInt(indexLoses),
+                cursor.getInt(indexDraws),
+                cursor.getString(indexDescription)
+            )
+
+            teams.add(team)
+            cursor.moveToNext()
+        }
+
+        return teams
+    }
+
     fun showDB() {
         cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
         cursor.moveToFirst()
