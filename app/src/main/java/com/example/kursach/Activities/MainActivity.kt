@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 description.text.toString()
             }
+
             val team = Team(
                 name = name.text.toString(),
                 slogan = slogan.text.toString(),

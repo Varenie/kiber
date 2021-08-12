@@ -62,6 +62,7 @@ class TablePlayers(context: Context) {
 
         return players
     }
+
     fun showDB() {
         cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
         cursor.moveToFirst()

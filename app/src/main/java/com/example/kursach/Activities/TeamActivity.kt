@@ -2,6 +2,7 @@ package com.example.kursach.Activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
@@ -12,23 +13,26 @@ import com.example.kursach.DataClasses.Player
 import com.example.kursach.R
 import com.example.kursach.Tables.TablePlayers
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlin.properties.Delegates
 
 class TeamActivity : AppCompatActivity() {
+    var team_id by Delegates.notNull<Int>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_team)
+
+        val intent = intent
+        team_id = intent.getIntExtra("TEAM_ID", 0)
+
 
         val fabAdd = findViewById<FloatingActionButton>(R.id.fab_player_add)
 
         fabAdd.setOnClickListener {
             openAddDialog()
         }
-        val myRecycler = findViewById<RecyclerView>(R.id.rv_players)
-        myRecycler.layoutManager = LinearLayoutManager(this)
-        myRecycler.setHasFixedSize(true)
 
-        val adapter = PlayersAdapter()
-        myRecycler.adapter = adapter
+        updateUI()
     }
 
     private fun openAddDialog() {
@@ -51,18 +55,42 @@ class TeamActivity : AppCompatActivity() {
 
         dialog.setPositiveButton("Подтвердить") {dialogInterface, which ->
             val tablePlayers = TablePlayers(this)
+
+            val descriptionText = if (description.text.isNullOrBlank()){
+                ""
+            } else {
+                description.text.toString()
+            }
+
             val player = Player(
                 team_id = 1,
                 fullname = fullname.text.toString(),
                 nickname = nickname.text.toString(),
                 games = games.text.toString(),
+                description = descriptionText
             )
 
             tablePlayers.addPlayer(player)
             tablePlayers.showDB()
+
+            updateUI()
+
             dialogInterface.dismiss()
         }
 
         dialog.show()
+    }
+
+    private fun updateUI() {
+        val tablePlayers = TablePlayers(this)
+
+        val myRecycler = findViewById<RecyclerView>(R.id.rv_players)
+        myRecycler.layoutManager = LinearLayoutManager(this)
+        myRecycler.setHasFixedSize(true)
+
+        val players = tablePlayers.getPlayers(team_id)
+
+        val adapter = PlayersAdapter(players)
+        myRecycler.adapter = adapter
     }
 }

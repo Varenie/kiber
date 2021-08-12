@@ -12,7 +12,7 @@ import com.example.kursach.R
 
 class TeamsAdapter(val teams: ArrayList<Team>): RecyclerView.Adapter<TeamsAdapter.VHolder>() {
 
-    class VHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class VHolder(itemView: View, val teams: ArrayList<Team>): RecyclerView.ViewHolder(itemView) {
         val name = itemView.findViewById<TextView>(R.id.tv_team_name)
         val slogan = itemView.findViewById<TextView>(R.id.tv_slogan)
         val wins = itemView.findViewById<TextView>(R.id.tv_wins)
@@ -24,17 +24,19 @@ class TeamsAdapter(val teams: ArrayList<Team>): RecyclerView.Adapter<TeamsAdapte
             super.itemView
             itemView.setOnClickListener {
                 val context = itemView.context
-                context.startActivity(Intent(context, TeamActivity::class.java))
+                val intent = Intent(context, TeamActivity::class.java)
+                intent.putExtra("TEAM_ID", teams[adapterPosition].id)
+                context.startActivity(intent)
             }
         }
 
-        fun bind(position: Int, teams: ArrayList<Team>){
-            name.text = teams[adapterPosition].name
-            slogan.text = teams[adapterPosition].slogan
-            wins.text = "Количество побед: ${teams[adapterPosition].wins}"
-            loses.text = "Количество поражений: ${teams[adapterPosition].loses}"
-            draws.text = "Количество ничьих: ${teams[adapterPosition].draws}"
-            description.text = teams[adapterPosition].description
+        fun bind(position: Int){
+            name.text = teams[position].name
+            slogan.text = teams[position].slogan
+            wins.text = "Количество побед: ${teams[position].wins}"
+            loses.text = "Количество поражений: ${teams[position].loses}"
+            draws.text = "Количество ничьих: ${teams[position].draws}"
+            description.text = teams[position].description
         }
     }
 
@@ -42,11 +44,11 @@ class TeamsAdapter(val teams: ArrayList<Team>): RecyclerView.Adapter<TeamsAdapte
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.recycler_item_teams, parent, false)
 
-        return VHolder(view)
+        return VHolder(view, teams)
     }
 
     override fun onBindViewHolder(holder: VHolder, position: Int) {
-        holder.bind(position, teams)
+        holder.bind(position)
     }
 
     override fun getItemCount(): Int {

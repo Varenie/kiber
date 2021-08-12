@@ -3,14 +3,24 @@ package com.example.kursach.Adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kursach.DataClasses.Player
 import com.example.kursach.R
 
-class PlayersAdapter: RecyclerView.Adapter<PlayersAdapter.VHolder>() {
+class PlayersAdapter(val players: ArrayList<Player>): RecyclerView.Adapter<PlayersAdapter.VHolder>() {
     class VHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
-        fun bind(position: Int){
+        val fullname = itemView.findViewById<TextView>(R.id.tv_fullname)
+        val nickname = itemView.findViewById<TextView>(R.id.tv_nickname)
+        val games = itemView.findViewById<TextView>(R.id.tv_games)
+        val description = itemView.findViewById<TextView>(R.id.tv_description)
 
+        fun bind(position: Int, players: ArrayList<Player>){
+            fullname.text = players[position].fullname
+            nickname.text = players[position].nickname
+            games.text = "Игрет в: ${players[position].games}"
+            description.text = players[position].description
         }
     }
 
@@ -22,10 +32,10 @@ class PlayersAdapter: RecyclerView.Adapter<PlayersAdapter.VHolder>() {
     }
 
     override fun onBindViewHolder(holder: VHolder, position: Int) {
-        holder.bind(position)
+        holder.bind(position, players)
     }
 
     override fun getItemCount(): Int {
-        return 5
+        return players.size
     }
 }
