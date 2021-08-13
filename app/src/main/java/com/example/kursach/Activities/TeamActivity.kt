@@ -6,9 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kursach.Adapters.PlayersAdapter
+import com.example.kursach.Adapters.SimpleTouchHelperCallback
 import com.example.kursach.DataClasses.Player
 import com.example.kursach.R
 import com.example.kursach.Tables.TablePlayers
@@ -17,6 +19,7 @@ import kotlin.properties.Delegates
 
 class TeamActivity : AppCompatActivity() {
     var team_id by Delegates.notNull<Int>()
+
     lateinit var tablePlayers: TablePlayers
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,7 +68,7 @@ class TeamActivity : AppCompatActivity() {
             }
 
             val player = Player(
-                team_id = 1,
+                team_id = team_id,
                 fullname = fullname.text.toString(),
                 nickname = nickname.text.toString(),
                 games = games.text.toString(),
@@ -90,7 +93,18 @@ class TeamActivity : AppCompatActivity() {
 
         val players = tablePlayers.getPlayers(team_id)
 
-        val adapter = PlayersAdapter(players)
+        val adapter = PlayersAdapter(players, this, team_id)
         myRecycler.adapter = adapter
+
+
+        val callback = SimpleTouchHelperCallback(adapter)
+        val touchHelper = ItemTouchHelper(callback)
+        touchHelper.attachToRecyclerView(myRecycler)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        updateUI()
     }
 }

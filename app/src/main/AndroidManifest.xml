@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Kursach">
         <activity
+            android:name=".Activities.TeamUpdateActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activities.PlayerUpdateActivity"
+            android:exported="true" />
+        <activity
             android:name=".Activities.TeamActivity"
             android:exported="true" />
         <activity

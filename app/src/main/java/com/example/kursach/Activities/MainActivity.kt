@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kursach.Adapters.SimpleTouchHelperCallback
 import com.example.kursach.R
 import com.example.kursach.Adapters.TeamsAdapter
 import com.example.kursach.DataClasses.Team
@@ -84,7 +86,11 @@ class MainActivity : AppCompatActivity() {
 
         val teams = tableTeams.getTeams()
 
-        val adapter = TeamsAdapter(teams)
+        val adapter = TeamsAdapter(teams, this)
         myRecycler.adapter = adapter
+
+        val callback = SimpleTouchHelperCallback(adapter)
+        val touchHelper = ItemTouchHelper(callback)
+        touchHelper.attachToRecyclerView(myRecycler)
     }
 }

@@ -68,6 +68,27 @@ class TablePlayers(context: Context) {
         cursor.moveToFirst()
         return cursor.count != 0
     }
+
+    fun deletePlayer(id: Int) {
+        db.delete(TABLE_NAME, "$COLUMN_ID = ?", arrayOf(id.toString()))
+    }
+
+    fun deletePlayersByTeamId(team_id: Int) {
+        db.delete(TABLE_NAME, "$COLUMN_TEAM_ID = ?", arrayOf(team_id.toString()))
+    }
+
+    fun updatePlayer(player: Player) {
+        val values = ContentValues().apply {
+            put(COLUMN_TEAM_ID, player.team_id)
+            put(COLUMN_FULLNAME, player.fullname)
+            put(COLUMN_NICKNAME, player.nickname)
+            put(COLUMN_GAMES, player.games)
+            put(COLUMN_DESCRIPTION, player.description)
+        }
+
+        db.update(TABLE_NAME, values, "$COLUMN_ID = ?", arrayOf(player.id.toString()))
+    }
+
     fun showDB() {
         cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
         cursor.moveToFirst()

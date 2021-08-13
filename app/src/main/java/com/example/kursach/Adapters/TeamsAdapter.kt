@@ -1,5 +1,6 @@
 package com.example.kursach.Adapters
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kursach.Activities.TeamActivity
 import com.example.kursach.DataClasses.Team
 import com.example.kursach.R
+import com.example.kursach.Tables.TablePlayers
+import com.example.kursach.Tables.TableTeams
 
-class TeamsAdapter(val teams: ArrayList<Team>): RecyclerView.Adapter<TeamsAdapter.VHolder>() {
+class TeamsAdapter(teams: ArrayList<Team>, val context: Context): RecyclerView.Adapter<TeamsAdapter.VHolder>(), ItemTouchHelperAdapter {
+    var teams = teams
 
     class VHolder(itemView: View, val teams: ArrayList<Team>): RecyclerView.ViewHolder(itemView) {
         val name = itemView.findViewById<TextView>(R.id.tv_team_name)
@@ -53,5 +57,21 @@ class TeamsAdapter(val teams: ArrayList<Team>): RecyclerView.Adapter<TeamsAdapte
 
     override fun getItemCount(): Int {
         return teams.size
+    }
+
+    override fun onItemMove(fromPosition: Int, toPosition: Int) {
+
+    }
+
+    override fun onItemDismiss(position: Int) {
+        val tableTeams = TableTeams(context)
+
+        //костыль, но немного чинит баг
+        teams = tableTeams.getTeams()
+        tableTeams.deleteTeam(teams[position].id)
+        teams.removeAt(position)
+
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, teams.size)
     }
 }

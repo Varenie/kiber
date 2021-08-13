@@ -3,6 +3,7 @@ package com.example.kursach.Tables
 import android.content.ContentValues
 import android.content.Context
 import android.util.Log
+import com.example.kursach.DBHelpers.DBHelperPlayers
 import com.example.kursach.DBHelpers.DBHelperTeams
 import com.example.kursach.DBHelpers.DBHelperTeams.Companion.COLUMN_DESCRIPTION
 import com.example.kursach.DBHelpers.DBHelperTeams.Companion.COLUMN_DRAWS
@@ -14,7 +15,7 @@ import com.example.kursach.DBHelpers.DBHelperTeams.Companion.COLUMN_WINS
 import com.example.kursach.DBHelpers.DBHelperTeams.Companion.TABLE_NAME
 import com.example.kursach.DataClasses.Team
 
-class TableTeams(context: Context) {
+class TableTeams(val context: Context) {
     private val TAG = "MYCHECK"
 
     private val dbHelper = DBHelperTeams(context)
@@ -64,6 +65,13 @@ class TableTeams(context: Context) {
         }
 
         return teams
+    }
+
+    fun deleteTeam(id: Int) {
+        val tablePlayers = TablePlayers(context)
+
+        db.delete(TABLE_NAME, "${COLUMN_ID} = ?", arrayOf(id.toString()))
+        tablePlayers.deletePlayersByTeamId(id)
     }
 
     fun showDB() {
