@@ -43,7 +43,7 @@ class TablePlayers(context: Context) {
     fun getPlayers(team_id: Int): ArrayList<Player> {
 
         val players = arrayListOf<Player>()
-        cursor = db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COLUMN_TEAM_ID", arrayOf(team_id.toString()))
+        cursor = db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COLUMN_TEAM_ID = ?", arrayOf(team_id.toString()))
         cursor.moveToFirst()
 
         while (!cursor.isAfterLast) {
@@ -63,6 +63,11 @@ class TablePlayers(context: Context) {
         return players
     }
 
+    fun isPlayersExist(team_id: Int): Boolean {
+        cursor = db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COLUMN_TEAM_ID = ?", arrayOf(team_id.toString()))
+        cursor.moveToFirst()
+        return cursor.count != 0
+    }
     fun showDB() {
         cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
         cursor.moveToFirst()
@@ -80,5 +85,9 @@ class TablePlayers(context: Context) {
             Log.d(TAG, player.toString())
             cursor.moveToNext()
         }
+    }
+
+    fun cleanDB() {
+        db.rawQuery("DELETE FROM $TABLE_NAME", null)
     }
 }

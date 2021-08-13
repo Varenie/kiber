@@ -1,5 +1,6 @@
 package com.example.kursach.Adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,13 +15,15 @@ class PlayersAdapter(val players: ArrayList<Player>): RecyclerView.Adapter<Playe
         val fullname = itemView.findViewById<TextView>(R.id.tv_fullname)
         val nickname = itemView.findViewById<TextView>(R.id.tv_nickname)
         val games = itemView.findViewById<TextView>(R.id.tv_games)
-        val description = itemView.findViewById<TextView>(R.id.tv_description)
+        val description = itemView.findViewById<TextView>(R.id.tv_player_description)
 
         fun bind(position: Int, players: ArrayList<Player>){
             fullname.text = players[position].fullname
             nickname.text = players[position].nickname
             games.text = "Игрет в: ${players[position].games}"
             description.text = players[position].description
+
+            Log.d("MYCHECK", players[position].description)
         }
     }
 

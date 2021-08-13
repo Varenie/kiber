@@ -17,14 +17,16 @@ import kotlin.properties.Delegates
 
 class TeamActivity : AppCompatActivity() {
     var team_id by Delegates.notNull<Int>()
+    lateinit var tablePlayers: TablePlayers
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_team)
 
+        tablePlayers = TablePlayers(this)
+
         val intent = intent
         team_id = intent.getIntExtra("TEAM_ID", 0)
-
 
         val fabAdd = findViewById<FloatingActionButton>(R.id.fab_player_add)
 
@@ -32,7 +34,9 @@ class TeamActivity : AppCompatActivity() {
             openAddDialog()
         }
 
-        updateUI()
+        if (tablePlayers.isPlayersExist(team_id)) {
+            updateUI()
+        }
     }
 
     private fun openAddDialog() {
@@ -46,7 +50,7 @@ class TeamActivity : AppCompatActivity() {
         val fullname = addWindow.findViewById<EditText>(R.id.et_player_name)
         val nickname = addWindow.findViewById<EditText>(R.id.et_nickname)
         val games = addWindow.findViewById<EditText>(R.id.et_games)
-        val description = addWindow.findViewById<EditText>(R.id.et_description)
+        val description = addWindow.findViewById<EditText>(R.id.et_player_description)
 
 
         dialog.setNegativeButton("Отменить") {dialogInterface, which ->
@@ -54,8 +58,6 @@ class TeamActivity : AppCompatActivity() {
         }
 
         dialog.setPositiveButton("Подтвердить") {dialogInterface, which ->
-            val tablePlayers = TablePlayers(this)
-
             val descriptionText = if (description.text.isNullOrBlank()){
                 ""
             } else {
@@ -82,8 +84,6 @@ class TeamActivity : AppCompatActivity() {
     }
 
     private fun updateUI() {
-        val tablePlayers = TablePlayers(this)
-
         val myRecycler = findViewById<RecyclerView>(R.id.rv_players)
         myRecycler.layoutManager = LinearLayoutManager(this)
         myRecycler.setHasFixedSize(true)
