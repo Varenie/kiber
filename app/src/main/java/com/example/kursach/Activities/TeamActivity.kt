@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,7 @@ import com.example.kursach.DataClasses.Player
 import com.example.kursach.R
 import com.example.kursach.Tables.TablePlayers
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import kotlin.properties.Delegates
 
 class TeamActivity : AppCompatActivity() {
@@ -62,6 +64,12 @@ class TeamActivity : AppCompatActivity() {
         }
 
         dialog.setPositiveButton("Подтвердить") {dialogInterface, which ->
+            when {
+                fullname.text.isNullOrBlank() -> {
+                    Snackbar.make(addWindow, "Поле имени пусто", Snackbar.LENGTH_SHORT).show()
+                    openAddDialog()
+                }
+            }
             val descriptionText = if (description.text.isNullOrBlank()){
                 ""
             } else {

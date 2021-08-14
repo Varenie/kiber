@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +15,7 @@ import com.example.kursach.Adapters.TeamsAdapter
 import com.example.kursach.DataClasses.Team
 import com.example.kursach.Tables.TableTeams
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -52,25 +54,44 @@ class MainActivity : AppCompatActivity() {
         }
 
         dialog.setPositiveButton("Подтвердить") {dialogInterface, which ->
-            val descriptionText = if (description.text.isNullOrBlank()){
-                ""
-            } else {
-                description.text.toString()
+            when {
+                name.text.isNullOrBlank() -> {
+                    Toast.makeText(this, "Поле навзания пусто", Toast.LENGTH_SHORT).show()
+                }
+                slogan.text.isNullOrBlank() -> {
+                    Toast.makeText(this, "Поле девиза пусто", Toast.LENGTH_SHORT).show()
+                }
+                wins.text.isNullOrBlank() -> {
+                    Toast.makeText(this, "Поле побед пусто", Toast.LENGTH_SHORT).show()
+                }
+                loses.text.isNullOrBlank() -> {
+                    Toast.makeText(this, "Поле поражений пусто", Toast.LENGTH_SHORT).show()
+                }
+                draws.text.isNullOrBlank() -> {
+                    Toast.makeText(this, "Поле ничьихЛ пусто", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    val descriptionText = if (description.text.isNullOrBlank()){
+                        ""
+                    } else {
+                        description.text.toString()
+                    }
+
+                    val team = Team(
+                        name = name.text.toString(),
+                        slogan = slogan.text.toString(),
+                        wins = wins.text.toString().toInt(),
+                        loses = loses.text.toString().toInt(),
+                        draws = draws.text.toString().toInt(),
+                        description = descriptionText
+                    )
+
+                    tableTeams.addTeam(team)
+                    tableTeams.showDB()
+
+                    updateUI()
+                }
             }
-
-            val team = Team(
-                name = name.text.toString(),
-                slogan = slogan.text.toString(),
-                wins = wins.text.toString().toInt(),
-                loses = loses.text.toString().toInt(),
-                draws = draws.text.toString().toInt(),
-                description = descriptionText
-            )
-
-            tableTeams.addTeam(team)
-            tableTeams.showDB()
-
-            updateUI()
 
             dialogInterface.dismiss()
         }
