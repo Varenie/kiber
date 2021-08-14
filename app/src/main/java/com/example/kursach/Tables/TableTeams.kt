@@ -74,6 +74,19 @@ class TableTeams(val context: Context) {
         tablePlayers.deletePlayersByTeamId(id)
     }
 
+    fun updateTeam(team: Team) {
+        val values = ContentValues().apply {
+            put(COLUMN_NAME, team.name)
+            put(COLUMN_SLOGAN, team.slogan)
+            put(COLUMN_WINS, team.wins)
+            put(COLUMN_LOSES, team.loses)
+            put(COLUMN_DRAWS, team.draws)
+            put(COLUMN_DESCRIPTION, team.description)
+        }
+
+        db.update(TABLE_NAME, values, "$COLUMN_ID = ?", arrayOf(team.id.toString()))
+    }
+
     fun showDB() {
         cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
         cursor.moveToFirst()

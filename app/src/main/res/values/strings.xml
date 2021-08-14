@@ -16,4 +16,5 @@
     <string name="games">Игры: CS:GO, Dota 2, WoW</string>
     <string name="et_games">Игры, в которые играет</string>
     <string name="et_player_description">Описание игрока (необязательно)</string>
+    <string name="update">Обновить</string>
 </resources>

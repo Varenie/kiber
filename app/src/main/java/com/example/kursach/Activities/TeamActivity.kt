@@ -38,7 +38,8 @@ class TeamActivity : AppCompatActivity() {
         }
 
         if (tablePlayers.isPlayersExist(team_id)) {
-            updateUI()
+            val players = tablePlayers.getPlayers(team_id)
+            updateUI(players)
         }
     }
 
@@ -78,7 +79,8 @@ class TeamActivity : AppCompatActivity() {
             tablePlayers.addPlayer(player)
             tablePlayers.showDB()
 
-            updateUI()
+            val players = tablePlayers.getPlayers(team_id)
+            updateUI(players)
 
             dialogInterface.dismiss()
         }
@@ -86,12 +88,10 @@ class TeamActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun updateUI() {
+    private fun updateUI(players: ArrayList<Player>) {
         val myRecycler = findViewById<RecyclerView>(R.id.rv_players)
         myRecycler.layoutManager = LinearLayoutManager(this)
         myRecycler.setHasFixedSize(true)
-
-        val players = tablePlayers.getPlayers(team_id)
 
         val adapter = PlayersAdapter(players, this, team_id)
         myRecycler.adapter = adapter
@@ -105,6 +105,7 @@ class TeamActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        updateUI()
+        val players = tablePlayers.getPlayers(team_id)
+        updateUI(players)
     }
 }

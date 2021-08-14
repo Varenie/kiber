@@ -13,7 +13,9 @@
         <entry key="..\:/GitHub/kiber/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/GitHub/kiber/app/src/main/res/layout/activity_player_update.xml" value="0.33" />
         <entry key="..\:/GitHub/kiber/app/src/main/res/layout/activity_team.xml" value="0.18" />
+        <entry key="..\:/GitHub/kiber/app/src/main/res/layout/activity_team_update.xml" value="0.18177083333333333" />
         <entry key="..\:/GitHub/kiber/app/src/main/res/layout/layout_player_add.xml" value="0.103125" />
+        <entry key="..\:/GitHub/kiber/app/src/main/res/layout/layout_team_add.xml" value="0.18177083333333333" />
         <entry key="..\:/GitHub/kiber/app/src/main/res/layout/recycler_item_players.xml" value="0.103125" />
       </map>
     </option>

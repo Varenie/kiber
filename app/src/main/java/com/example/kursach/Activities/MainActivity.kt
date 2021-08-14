@@ -93,4 +93,10 @@ class MainActivity : AppCompatActivity() {
         val touchHelper = ItemTouchHelper(callback)
         touchHelper.attachToRecyclerView(myRecycler)
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        updateUI()
+    }
 }

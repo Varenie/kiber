@@ -8,6 +8,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kursach.Activities.TeamActivity
+import com.example.kursach.Activities.TeamUpdateActivity
+import com.example.kursach.DBHelpers.DBHelperTeams.Companion.COLUMN_DESCRIPTION
+import com.example.kursach.DBHelpers.DBHelperTeams.Companion.COLUMN_DRAWS
+import com.example.kursach.DBHelpers.DBHelperTeams.Companion.COLUMN_ID
+import com.example.kursach.DBHelpers.DBHelperTeams.Companion.COLUMN_LOSES
+import com.example.kursach.DBHelpers.DBHelperTeams.Companion.COLUMN_NAME
+import com.example.kursach.DBHelpers.DBHelperTeams.Companion.COLUMN_SLOGAN
+import com.example.kursach.DBHelpers.DBHelperTeams.Companion.COLUMN_WINS
 import com.example.kursach.DataClasses.Team
 import com.example.kursach.R
 import com.example.kursach.Tables.TablePlayers
@@ -26,11 +34,26 @@ class TeamsAdapter(teams: ArrayList<Team>, val context: Context): RecyclerView.A
 
         init {
             super.itemView
+            val context = itemView.context
             itemView.setOnClickListener {
-                val context = itemView.context
                 val intent = Intent(context, TeamActivity::class.java)
                 intent.putExtra("TEAM_ID", teams[adapterPosition].id)
                 context.startActivity(intent)
+            }
+
+            itemView.setOnLongClickListener {
+                val intent = Intent(context, TeamUpdateActivity::class.java)
+
+                intent.putExtra(COLUMN_ID, teams[adapterPosition].id)
+                intent.putExtra(COLUMN_NAME, teams[adapterPosition].name)
+                intent.putExtra(COLUMN_SLOGAN, teams[adapterPosition].slogan)
+                intent.putExtra(COLUMN_WINS, teams[adapterPosition].wins)
+                intent.putExtra(COLUMN_LOSES, teams[adapterPosition].loses)
+                intent.putExtra(COLUMN_DRAWS, teams[adapterPosition].draws)
+                intent.putExtra(COLUMN_DESCRIPTION, teams[adapterPosition].description)
+
+                context.startActivity(intent)
+                true
             }
         }
 
