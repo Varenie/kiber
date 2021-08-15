@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.EditText
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -18,11 +19,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
-
+    lateinit var tableTeams: TableTeams
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        tableTeams = TableTeams(this)
 
         val fabAdd = findViewById<FloatingActionButton>(R.id.fab_add_team)
 
@@ -30,7 +32,24 @@ class MainActivity : AppCompatActivity() {
             openAddDialog()
         }
 
-        updateUI()
+
+        updateUI(tableTeams.getTeams())
+
+        val searchView = findViewById<SearchView>(R.id.searchView)
+
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query != null) {
+                    updateUI(tableTeams.searchTeam(query))
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+
+        })
     }
 
     private fun openAddDialog() {
@@ -89,7 +108,7 @@ class MainActivity : AppCompatActivity() {
                     tableTeams.addTeam(team)
                     tableTeams.showDB()
 
-                    updateUI()
+                    updateUI(tableTeams.getTeams())
                 }
             }
 
@@ -99,13 +118,11 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun updateUI() {
-        val tableTeams = TableTeams(this)
+    private fun updateUI(teams: ArrayList<Team>) {
+
         val myRecycler = findViewById<RecyclerView>(R.id.rv_teams)
         myRecycler.layoutManager = LinearLayoutManager(this)
         myRecycler.setHasFixedSize(true)
-
-        val teams = tableTeams.getTeams()
 
         val adapter = TeamsAdapter(teams, this)
         myRecycler.adapter = adapter
@@ -118,6 +135,11 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        updateUI()
+        updateUI(tableTeams.getTeams())
+    }
+
+    override fun onBackPressed() {
+//        super.onBackPressed()
+        updateUI(tableTeams.getTeams())
     }
 }

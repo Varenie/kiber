@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.example.kursach.DBHelpers.DBHelperPlayers.Companion.COLUMN_DESCRIPTION
 import com.example.kursach.DBHelpers.DBHelperPlayers.Companion.COLUMN_FULLNAME
 import com.example.kursach.DBHelpers.DBHelperPlayers.Companion.COLUMN_GAMES
@@ -61,24 +62,37 @@ class PlayerUpdateActivity : AppCompatActivity() {
     private fun updatePlayer(player: Player) {
         val tablePlayers = TablePlayers(this)
 
-        val descriptionText = if (description.text.isNullOrBlank()){
-            ""
-        } else {
-            description.text.toString()
+        when {
+            fullname.text.isNullOrBlank() -> {
+                Toast.makeText(this, "Поле имени пусто", Toast.LENGTH_SHORT).show()
+            }
+            nickname.text.isNullOrBlank() -> {
+                Toast.makeText(this, "Поле имени пусто", Toast.LENGTH_SHORT).show()
+            }
+            games.text.isNullOrBlank() -> {
+                Toast.makeText(this, "Поле имени пусто", Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                val descriptionText = if (description.text.isNullOrBlank()) {
+                    ""
+                } else {
+                    description.text.toString()
+                }
+
+                val mPlayer = Player(
+                    player.id,
+                    player.team_id,
+                    fullname.text.toString(),
+                    nickname.text.toString(),
+                    games.text.toString(),
+                    descriptionText
+                )
+
+                tablePlayers.updatePlayer(mPlayer)
+                tablePlayers.showDB()
+
+                onBackPressed()
+            }
         }
-
-        val mPlayer = Player(
-            player.id,
-            player.team_id,
-            fullname.text.toString(),
-            nickname.text.toString(),
-            games.text.toString(),
-            descriptionText
-        )
-
-        tablePlayers.updatePlayer(mPlayer)
-        tablePlayers.showDB()
-
-        onBackPressed()
     }
 }

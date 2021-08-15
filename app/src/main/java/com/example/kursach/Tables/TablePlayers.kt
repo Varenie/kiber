@@ -89,6 +89,28 @@ class TablePlayers(context: Context) {
         db.update(TABLE_NAME, values, "$COLUMN_ID = ?", arrayOf(player.id.toString()))
     }
 
+    fun searchPlayer(team_id: Int, nickname: String): ArrayList<Player> {
+        val players = arrayListOf<Player>()
+        cursor = db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COLUMN_TEAM_ID = ? AND $COLUMN_NICKNAME = ?", arrayOf(team_id.toString(), nickname))
+        cursor.moveToFirst()
+
+        while (!cursor.isAfterLast) {
+            val player = Player(
+                cursor.getInt(indexId),
+                cursor.getInt(indexTeamId),
+                cursor.getString(indexFullname),
+                cursor.getString(indexNickname),
+                cursor.getString(indexGames),
+                cursor.getString(indexDescription)
+            )
+
+            players.add(player)
+            cursor.moveToNext()
+        }
+
+        return players
+    }
+
     fun showDB() {
         cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
         cursor.moveToFirst()

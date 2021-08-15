@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.example.kursach.DBHelpers.DBHelperTeams.Companion.COLUMN_DESCRIPTION
 import com.example.kursach.DBHelpers.DBHelperTeams.Companion.COLUMN_DRAWS
 import com.example.kursach.DBHelpers.DBHelperTeams.Companion.COLUMN_ID
@@ -69,25 +70,46 @@ class TeamUpdateActivity : AppCompatActivity() {
 
     private fun updateTeam(team_id: Int) {
         val tableTeams = TableTeams(this)
-        val descriptionText = if (description.text.isNullOrBlank()){
-            ""
-        } else {
-            description.text.toString()
+
+        when {
+            name.text.isNullOrBlank() -> {
+                Toast.makeText(this, "Поле навзания пусто", Toast.LENGTH_SHORT).show()
+            }
+            slogan.text.isNullOrBlank() -> {
+                Toast.makeText(this, "Поле девиза пусто", Toast.LENGTH_SHORT).show()
+            }
+            wins.text.isNullOrBlank() -> {
+                Toast.makeText(this, "Поле побед пусто", Toast.LENGTH_SHORT).show()
+            }
+            loses.text.isNullOrBlank() -> {
+                Toast.makeText(this, "Поле поражений пусто", Toast.LENGTH_SHORT).show()
+            }
+            draws.text.isNullOrBlank() -> {
+                Toast.makeText(this, "Поле ничьихЛ пусто", Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                val descriptionText = if (description.text.isNullOrBlank()) {
+                    ""
+                } else {
+                    description.text.toString()
+                }
+
+                val team = Team(
+                    team_id,
+                    name.text.toString(),
+                    slogan.text.toString(),
+                    wins.text.toString().toInt(),
+                    loses.text.toString().toInt(),
+                    draws.text.toString().toInt(),
+                    descriptionText
+                )
+
+                tableTeams.updateTeam(team)
+                tableTeams.showDB()
+
+                onBackPressed()
+            }
         }
 
-        val team = Team(
-            team_id,
-            name.text.toString(),
-            slogan.text.toString(),
-            wins.text.toString().toInt(),
-            loses.text.toString().toInt(),
-            draws.text.toString().toInt(),
-            descriptionText
-        )
-
-        tableTeams.updateTeam(team)
-        tableTeams.showDB()
-
-        onBackPressed()
     }
 }

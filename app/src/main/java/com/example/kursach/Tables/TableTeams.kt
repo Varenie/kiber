@@ -74,6 +74,28 @@ class TableTeams(val context: Context) {
         tablePlayers.deletePlayersByTeamId(id)
     }
 
+    fun searchTeam(team_name: String): ArrayList<Team> {
+        val teams = arrayListOf<Team>()
+        cursor = db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COLUMN_NAME = ?", arrayOf(team_name))
+        cursor.moveToFirst()
+
+        while (!cursor.isAfterLast) {
+            val team = Team(
+                cursor.getInt(indexId),
+                cursor.getString(indexName),
+                cursor.getString(indexSlogan),
+                cursor.getInt(indexWins),
+                cursor.getInt(indexLoses),
+                cursor.getInt(indexDraws),
+                cursor.getString(indexDescription)
+            )
+
+            teams.add(team)
+            cursor.moveToNext()
+        }
+
+        return teams
+    }
     fun updateTeam(team: Team) {
         val values = ContentValues().apply {
             put(COLUMN_NAME, team.name)

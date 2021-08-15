@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.EditText
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -43,6 +44,23 @@ class TeamActivity : AppCompatActivity() {
             val players = tablePlayers.getPlayers(team_id)
             updateUI(players)
         }
+
+        val searchView = findViewById<SearchView>(R.id.searchView)
+
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query != null) {
+                    updateUI(tablePlayers.searchPlayer(team_id, query))
+                }
+
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+
+        })
     }
 
     private fun openAddDialog() {
@@ -66,29 +84,36 @@ class TeamActivity : AppCompatActivity() {
         dialog.setPositiveButton("Подтвердить") {dialogInterface, which ->
             when {
                 fullname.text.isNullOrBlank() -> {
-                    Snackbar.make(addWindow, "Поле имени пусто", Snackbar.LENGTH_SHORT).show()
-                    openAddDialog()
+                    Toast.makeText(this, "Поле имени пусто", Toast.LENGTH_SHORT).show()
+                }
+                nickname.text.isNullOrBlank() -> {
+                    Toast.makeText(this, "Поле имени пусто", Toast.LENGTH_SHORT).show()
+                }
+                games.text.isNullOrBlank() -> {
+                    Toast.makeText(this, "Поле имени пусто", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    val descriptionText = if (description.text.isNullOrBlank()) {
+                        ""
+                    } else {
+                        description.text.toString()
+                    }
+
+                    val player = Player(
+                        team_id = team_id,
+                        fullname = fullname.text.toString(),
+                        nickname = nickname.text.toString(),
+                        games = games.text.toString(),
+                        description = descriptionText
+                    )
+
+                    tablePlayers.addPlayer(player)
+                    tablePlayers.showDB()
+
+                    val players = tablePlayers.getPlayers(team_id)
+                    updateUI(players)
                 }
             }
-            val descriptionText = if (description.text.isNullOrBlank()){
-                ""
-            } else {
-                description.text.toString()
-            }
-
-            val player = Player(
-                team_id = team_id,
-                fullname = fullname.text.toString(),
-                nickname = nickname.text.toString(),
-                games = games.text.toString(),
-                description = descriptionText
-            )
-
-            tablePlayers.addPlayer(player)
-            tablePlayers.showDB()
-
-            val players = tablePlayers.getPlayers(team_id)
-            updateUI(players)
 
             dialogInterface.dismiss()
         }
