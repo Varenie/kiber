@@ -8,7 +8,7 @@ class SimpleTouchHelperCallback(val adapter: ItemTouchHelperAdapter): ItemTouchH
     override fun getMovementFlags(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder
-    ): Int {
+    ): Int { //здесь назначем флаги двиения, drag не еализован, а вот для свайпа оставляем только движение влево
         val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
         val swipeFlags = ItemTouchHelper.START
         return makeMovementFlags(dragFlags, swipeFlags)

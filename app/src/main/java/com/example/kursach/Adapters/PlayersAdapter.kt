@@ -25,7 +25,7 @@ import com.example.kursach.Tables.TablePlayers
 class PlayersAdapter(players: ArrayList<Player>, val context: Context, val team_id: Int): RecyclerView.Adapter<PlayersAdapter.VHolder>(), ItemTouchHelperAdapter {
     var players = players
 
-    class VHolder(itemView: View, val players: ArrayList<Player>): RecyclerView.ViewHolder(itemView) {
+    class VHolder(itemView: View, val players: ArrayList<Player>): RecyclerView.ViewHolder(itemView) { //класс отвечающий за вид элемента списка
 
         val fullname = itemView.findViewById<TextView>(R.id.tv_fullname)
         val nickname = itemView.findViewById<TextView>(R.id.tv_nickname)
@@ -34,7 +34,8 @@ class PlayersAdapter(players: ArrayList<Player>, val context: Context, val team_
 
         init {
             super.itemView
-            itemView.setOnLongClickListener {
+            itemView.setOnLongClickListener { //обработчик ддолго нажатия на элемент
+                // при долго наатии, данные об элементе передаюся чрез intent в следующую активти, и само активти запускается
                 val context = itemView.context
                 val intent = Intent(context, PlayerUpdateActivity::class.java)
 
@@ -50,7 +51,7 @@ class PlayersAdapter(players: ArrayList<Player>, val context: Context, val team_
             }
         }
 
-        fun bind(position: Int){
+        fun bind(position: Int){ // добавляет соответствующие элементу данные на поля
             fullname.text = players[position].fullname
             nickname.text = players[position].nickname
             games.text = "Игрет в: ${players[position].games}"
@@ -59,7 +60,7 @@ class PlayersAdapter(players: ArrayList<Player>, val context: Context, val team_
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHolder { // здесь создается viewHolder для каждого элемента
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.recycler_item_players, parent, false)
 
@@ -74,18 +75,22 @@ class PlayersAdapter(players: ArrayList<Player>, val context: Context, val team_
         return players.size
     }
 
-    override fun onItemMove(fromPosition: Int, toPosition: Int) {
+    override fun onItemMove(fromPosition: Int, toPosition: Int) { //эта функция перемещения элемента, но такого функционала нет
 
     }
 
-    override fun onItemDismiss(position: Int) {
+    override fun onItemDismiss(position: Int) { //при свайпе удаляет элемент
         val tablePlayers = TablePlayers(context)
 
         //костыль, но немного чинит баг
+        //сначала берем список из бд, чтобы точно знать его размер
         players = tablePlayers.getPlayers(team_id)
+        //удаляем из бд элемент по его id
         tablePlayers.deletePlayer(players[position].id)
+        //удаляем элемент из спика
         players.removeAt(position)
 
+        //сообщаем списку, что мы удалили элемент, чтобы не было пустого места
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, players.size)
     }

@@ -35,13 +35,13 @@ class TeamsAdapter(teams: ArrayList<Team>, val context: Context): RecyclerView.A
         init {
             super.itemView
             val context = itemView.context
-            itemView.setOnClickListener {
+            itemView.setOnClickListener { // обработка клика на элемент, передает в следующие активти id элемента, чтобы подгрузить игроков для соответсвтующей команды
                 val intent = Intent(context, TeamActivity::class.java)
                 intent.putExtra("TEAM_ID", teams[adapterPosition].id)
                 context.startActivity(intent)
             }
 
-            itemView.setOnLongClickListener {
+            itemView.setOnLongClickListener { // при длинном нажатии переводит на активти изменения, и подтягивает сатрые данные через intent
                 val intent = Intent(context, TeamUpdateActivity::class.java)
 
                 intent.putExtra(COLUMN_ID, teams[adapterPosition].id)

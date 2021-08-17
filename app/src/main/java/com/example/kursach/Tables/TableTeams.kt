@@ -68,6 +68,7 @@ class TableTeams(val context: Context) {
     }
 
     fun deleteTeam(id: Int) {
+        //при удалении команды, вызвается функция удаления из бд игроков этой команды, чтобы не было захламления бд
         val tablePlayers = TablePlayers(context)
 
         db.delete(TABLE_NAME, "${COLUMN_ID} = ?", arrayOf(id.toString()))

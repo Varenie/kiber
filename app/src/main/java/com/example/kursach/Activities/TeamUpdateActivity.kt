@@ -105,7 +105,6 @@ class TeamUpdateActivity : AppCompatActivity() {
                 )
 
                 tableTeams.updateTeam(team)
-                tableTeams.showDB()
 
                 onBackPressed()
             }

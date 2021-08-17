@@ -31,6 +31,7 @@ class TeamActivity : AppCompatActivity() {
 
         tablePlayers = TablePlayers(this)
 
+        //берем id команды, переданные через intent
         val intent = intent
         team_id = intent.getIntExtra("TEAM_ID", 0)
 
@@ -108,7 +109,6 @@ class TeamActivity : AppCompatActivity() {
                     )
 
                     tablePlayers.addPlayer(player)
-                    tablePlayers.showDB()
 
                     val players = tablePlayers.getPlayers(team_id)
                     updateUI(players)

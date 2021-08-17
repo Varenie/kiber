@@ -28,6 +28,7 @@ class PlayerUpdateActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player_update)
 
+        //принмаем все даннные переданные через intent, чтобы поля уже были заполнены старыми значениями
         val intent = intent
         val player = Player(
             intent.getIntExtra(COLUMN_ID, 0),
@@ -47,7 +48,7 @@ class PlayerUpdateActivity : AppCompatActivity() {
         }
     }
 
-    private fun setUI(player: Player) {
+    private fun setUI(player: Player) { //функция которая инициализирует поля ввода и заполняет их старыми значниями
         fullname = findViewById(R.id.et_player_name)
         nickname = findViewById(R.id.et_nickname)
         games = findViewById(R.id.et_games)
@@ -88,8 +89,8 @@ class PlayerUpdateActivity : AppCompatActivity() {
                     descriptionText
                 )
 
+                //считваем данные с полей и обновляем элемент, после чего, возвращаемся в прошлое активти
                 tablePlayers.updatePlayer(mPlayer)
-                tablePlayers.showDB()
 
                 onBackPressed()
             }

@@ -1,6 +1,6 @@
 package com.example.kursach.Adapters
 
-interface ItemTouchHelperAdapter { //интерфекйс для swipe b drag&drop
+interface ItemTouchHelperAdapter { //интерфекйс для swipe и drag&drop
 
     fun onItemMove(fromPosition: Int, toPosition: Int)
 
